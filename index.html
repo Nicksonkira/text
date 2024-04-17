@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Notifications Example</title>
+    <style>
+        #notification-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Web Notifications Example</h1>
+    <button onclick="requestNotificationPermission()">Enable Notifications</button>
+    <div id="notification-container"></div>
+
+    <script>
+        function requestNotificationPermission() {
+            // Check if the browser supports notifications
+            if (!('Notification' in window)) {
+                alert('This browser does not support desktop notifications.');
+                return;
+            }
+
+            // Request permission for notifications
+            Notification.requestPermission().then(function (result) {
+                if (result === 'granted') {
+                    showNotification('Hello, world!');
+                } else {
+                    alert('Permission for notifications was denied.');
+                }
+            });
+        }
+
+        function showNotification(message) {
+            // Create and display the notification
+            var notification = new Notification('Notification', {
+                body: message
+            });
+
+            // Handle notification click
+            notification.onclick = function () {
+                // Handle notification click, if needed
+                alert('Notification clicked');
+            };
+
+            // Automatically close the notification after 3 seconds
+            setTimeout(function () {
+                notification.close();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
